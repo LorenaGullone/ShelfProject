@@ -28,7 +28,7 @@ public class Utente {
 
     @Basic
     @Column(name = "cognome", nullable = true, length = 50)
-    private String lastName;
+    private String cognome;
 
     @Basic
     @Column(name = "cellulare", nullable = true, length = 20)
@@ -40,7 +40,7 @@ public class Utente {
 
     @Basic
     @Column(name = "indirizzo", nullable = true, length = 150)
-    private String address;
+    private String indirizzo;
 
     @Basic
     @Column(name = "avatar", nullable = true, length = 150)
@@ -52,7 +52,7 @@ public class Utente {
 
     @OneToMany(mappedBy = "acquirente", cascade = CascadeType.MERGE)
     @JsonIgnore
-    private Collection<Carrello> carrello;
+    private Collection<Ordine> ordine;
 
     @Basic
     @Column(name = "admin")

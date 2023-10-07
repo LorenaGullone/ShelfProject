@@ -23,7 +23,7 @@ public class Prodotto {
 
     @Basic
     @Column(name = "nome", nullable = true, length = 50)
-    private String name;
+    private String nome;
 
     @Basic
     @Column(name = "bar_code", nullable = true, length = 70)
@@ -54,9 +54,9 @@ public class Prodotto {
     @JsonIgnore
     private long version;
 
-    @OneToMany(targetEntity = DettaglioCarrello.class, mappedBy = "prodotto", cascade = CascadeType.MERGE)
+    @OneToMany(targetEntity = DettaglioOrdine.class, mappedBy = "prodotto", cascade = CascadeType.MERGE)
     @JsonIgnore
     @ToString.Exclude
-    private List<DettaglioCarrello> productsInPurchase;
+    private List<DettaglioOrdine> dettagliOrdine;
 
 }//Prodotto

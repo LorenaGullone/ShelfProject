@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "dettaglio_carrello", schema = "database")
-public class DettaglioCarrello {
+public class DettaglioOrdine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -23,7 +23,7 @@ public class DettaglioCarrello {
     @JoinColumn(name = "carrello")
     @JsonIgnore
     @ToString.Exclude
-    private Carrello carrello;
+    private Ordine ordine;
 
     @Basic
     @Column(name = "quantità", nullable = true)
@@ -32,4 +32,5 @@ public class DettaglioCarrello {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "prodotto")
     private Prodotto prodotto;
-}
+
+}//DettaglioCarrello

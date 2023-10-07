@@ -10,13 +10,14 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.util.Date;
 import java.util.List;
 
+
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
 @Entity
 @Table(name = "carrello", schema = "database")
-public class Carrello {
+public class Ordine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -29,14 +30,14 @@ public class Carrello {
     @Basic
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "ultimaModifica")
-    private Date ultimaModifica;
+    @Column(name = "data")
+    private Date data;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "acquirente")
     private Utente acquirente;
 
     @OneToMany(mappedBy = "carrello", cascade = CascadeType.MERGE)
-    private List<DettaglioCarrello> dettagliAcquisto;
+    private List<DettaglioOrdine> dettagliOrdine;
 
 }//Carrello
