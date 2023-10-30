@@ -1,0 +1,28 @@
+spring:
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/shelfDB
+    username: postgres
+    password: postgres2023
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect #usato per convertire le query da JPQL in quelle specifiche di postgres
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+
+server:
+  port: 8082
+
+com:
+  shelf:
+    shelfproject:
+      jwtSecret: bm9uc29jaGVjaGlhdmV1c2FyZW1hc29jaGVkZXZlZXNzZXJlbHVuZ2EyNTZiaXRz==
+      jwtExpirationMs: 10800000 # 3 hours
+      jwtRememberExpirationMs: 1209600033 # 2 settimane
+
+
+
+
