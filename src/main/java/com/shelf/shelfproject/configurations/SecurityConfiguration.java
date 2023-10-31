@@ -19,6 +19,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 
 @Configuration
@@ -40,6 +43,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/auth/login")).permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/auth/sign_up")).permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/auth/logout")).permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/products/**")).permitAll()
                         .anyRequest().hasAnyRole("USER", "ADMIN")
                 )
@@ -52,23 +56,20 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-    /*@Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        return http
-                .cors(cors -> cors.configure(http))
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login").permitAll()
-                        .requestMatchers("/auth/register").permitAll()
-                        .requestMatchers("/products/**").permitAll()
-                        .anyRequest().hasAnyRole("USER", "ADMIN"))
-                .exceptionHandling(eh -> eh.authenticationEntryPoint(unauthorizedHandler))
-                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider())
-                .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-                .build();
-    }*/
+    @Bean
+    public CorsFilter corsFilter(){
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowCredentials(false);
+        configuration.addAllowedOrigin("*");//indirizzo da dove provengono le chiamate del front-end
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("OPTIONS");
+        configuration.addAllowedMethod("GET");
+        configuration.addAllowedMethod("POST");
+        configuration.addAllowedMethod("PUT");
+        source.registerCorsConfiguration("/**", configuration);
+        return new CorsFilter(source);
+    }
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {

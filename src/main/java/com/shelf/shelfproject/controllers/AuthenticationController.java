@@ -80,7 +80,7 @@ public class AuthenticationController {
 
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public ResponseEntity<?> logoutUser() {
         System.out.println(SecurityContextHolder.getContext().toString());
         SecurityContextHolder.clearContext();
