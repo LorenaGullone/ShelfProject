@@ -1,0 +1,28 @@
+CASCADE
+In Spring Boot, il CascadeType è un'annotazione utilizzata per definire il comportamento di cascata delle operazioni su oggetti associati
+nelle relazioni tra entità nelle applicazioni Spring Data JPA.
+Questo tipo di cascata specifica quali operazioni dovrebbero essere propagate automaticamente da un oggetto padre a uno o più oggetti figlio
+quando vengono eseguite determinate operazioni (come persistenza, aggiornamento o eliminazione) sull'oggetto padre.
+L'annotazione CascadeType è comunemente utilizzata con relazioni di tipo "one-to-many" o "many-to-many" tra entità.
+
+Ecco le diverse opzioni per il CascadeType e cosa significano:
+- CascadeType.ALL: Questo indica che tutte le operazioni dovrebbero essere propagate automaticamente.
+    Quindi, se si esegue un'operazione su un oggetto padre, come persistenza, essa verrà propagata a tutti gli oggetti figlio associati.
+- CascadeType.PERSIST: Indica che l'operazione di persistenza dovrebbe essere cascata.
+    Questo significa che quando si salva un oggetto padre, tutti gli oggetti figlio associati verranno anche salvati.
+- CascadeType.MERGE: Questo indica che l'operazione di merge dovrebbe essere cascata.
+    Quando si esegue un merge su un oggetto padre, il merge sarà propagato a tutti gli oggetti figlio associati.
+- CascadeType.REMOVE: Questo indica che l'operazione di rimozione dovrebbe essere cascata.
+    Quando si elimina un oggetto padre, la rimozione sarà propagata a tutti gli oggetti figlio associati.
+- CascadeType.REFRESH: Indica che l'operazione di aggiornamento dovrebbe essere cascata.
+    Quando si aggiorna un oggetto padre, l'aggiornamento verrà propagato a tutti gli oggetti figlio associati.
+- CascadeType.DETACH: Questo indica che l'operazione di detach dovrebbe essere cascata.
+    Quando si stacca un oggetto padre dal contesto di persistenza, questa operazione verrà propagata a tutti gli oggetti figlio associati.
+- CascadeType.DETACH: Indica che l'operazione di merge dovrebbe essere cascata.
+    Quando si fa un refresh su un oggetto padre, il refresh sarà propagato a tutti gli oggetti figlio associati.
+- CascadeType.REPLICATE: Questo indica che l'operazione di replicazione dovrebbe essere cascata.
+    Questa opzione è specifica di Hibernate e viene utilizzata per replicare oggetti nelle configurazioni di replica del database.
+
+È importante scegliere attentamente le opzioni di CascadeType in base alle esigenze dell'applicazione, poiché l'uso improprio
+delle cascata può portare a comportamenti inaspettati o indesiderati nel database. Inoltre, è possibile combinare più opzioni CascadeType
+per ottenere il comportamento desiderato nelle relazioni tra entità.
