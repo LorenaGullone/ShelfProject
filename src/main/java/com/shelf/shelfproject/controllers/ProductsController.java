@@ -26,6 +26,7 @@ public class ProductsController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping("/add")
     public ResponseEntity<Object> create(@RequestBody @Valid Product product) {
+        System.out.println(product);
         Product p;
         try {
             p = productService.addProduct(product);
@@ -41,14 +42,13 @@ public class ProductsController {
 
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @GetMapping("/updateQnt")
-    public ResponseEntity<Object> updateQuantity(@RequestParam(value = "idProd", required = true) int idProd,
-                                           @RequestParam(value = "newQuantity", required = true) int quantity) {
+    @PostMapping("/update_quantity")
+    public ResponseEntity<Object> updateQuantity(@RequestBody @Valid Product product) {
         int i = 0;
         try {
             while( i<THRESHOLD){
                 try{
-                    productService.updateQuantity(idProd, quantity);
+                    productService.updateQuantity(product.getBarCode(), product.getQuantity());
                     return new ResponseEntity<>(new ResponseMessage("UPDATE_SUCCESFULLY"), HttpStatus.OK);
                 } catch(OptimisticLockException e){
                     i++;
@@ -88,23 +88,6 @@ public class ProductsController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping("/advanced_search/name&style")
-    public ResponseEntity<Object> getByNameAndStyle(@RequestParam(required = true) String name, @RequestParam(required = true) String style) {
-        List<Product> result = productService.showProductsByNameAndStyle(name, style);
-        if ( result.size() <= 0 ) {
-            return new ResponseEntity<>(new ResponseMessage("NO_RESULT"), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    @GetMapping("/advanced_search/name&category")
-    public ResponseEntity<Object> getByStyleAndCategory(@RequestParam(required = true) String style, @RequestParam(required = true) String category) {
-        List<Product> result = productService.showProductsByStyleAndCategory(style, category);
-        if ( result.size() <= 0 ) {
-            return new ResponseEntity<>(new ResponseMessage("NO_RESULT"), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
 
 
 }

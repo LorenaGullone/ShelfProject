@@ -1,8 +1,6 @@
 package com.shelf.shelfproject.services;
 
-import com.shelf.shelfproject.entities.Category;
 import com.shelf.shelfproject.entities.Product;
-import com.shelf.shelfproject.entities.Style;
 import com.shelf.shelfproject.repositories.ProductRepository;
 import com.shelf.shelfproject.support.exceptions.BarCodeAlreadyExistException;
 import com.shelf.shelfproject.support.exceptions.CategoryNotFoundException;
@@ -52,20 +50,16 @@ public class ProductService {
         product.setImage(image);
         product.setPrice(price);
         product.setQuantity(quantity);
-        Category category1 = Category.convert(category);
-        product.setCategory(category1);
-        Style style1 = Style.convert(style);
-        product.setStyle(style1);
         return productRepository.save(product);
     }
 
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, rollbackFor = {ValidationFailed.class, OptimisticLockException.class})
-    public Product updateQuantity(long idProdotto, int quantity) {
+    public Product updateQuantity(String barCode, int quantity) {
         //vedere se usare metodo con lock
-        Optional<Product> result = productRepository.findById(idProdotto);
+        List<Product> result = productRepository.findByBarCode(barCode);
         if( result.isEmpty() || quantity <= 0 )
             throw new ValidationFailed();
-        Product product = result.get();
+        Product product = result.get(0);
         int oldQnt = product.getQuantity();
         product.setQuantity(oldQnt+quantity);
         return product;
@@ -110,15 +104,6 @@ public class ProductService {
         return productRepository.findByBarCode(barCode);
     }
 
-    @Transactional(readOnly = true)
-    public List<Product> showProductsByNameAndStyle(String name, String style) {
-        return productRepository.findByNameAndStyle(name, style);
-    }
-
-    @Transactional(readOnly = true)
-    public List<Product> showProductsByStyleAndCategory(String style, String category) {
-        return productRepository.findByStyleAndCategory(style, category);
-    }
 
 
 

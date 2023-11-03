@@ -44,14 +44,6 @@ public class Product {
     private String image;
 
     @Basic
-    @Column(name = "style", length = 500)
-    private Style style;
-
-    @Basic
-    @Column(name = "category", length = 500)
-    private Category category;
-
-    @Basic
     @PositiveOrZero
     @Column(name = "price", nullable = false)
     private float price;
